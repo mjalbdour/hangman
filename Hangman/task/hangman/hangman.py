@@ -1,10 +1,15 @@
 # Write your code here
-print('H A N G M A N')
+import random
 
-answer = 'python'
 msg_win = 'You survived!'
 msg_lost = 'You lost!'
 
+random.seed()
+
+answers = ['python', 'java', 'swift', 'javascript']
+answer = random.choice(answers)
+
+print('H A N G M A N')
 print('Guess the word: > ')
 guess = input()
 
