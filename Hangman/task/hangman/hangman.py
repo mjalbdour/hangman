@@ -2,13 +2,13 @@
 import random
 
 
-def replace_with_letter(word, guess_word, l):
+def replace_with_letter(word, guess_word, letter_):
     for i, c in enumerate(word):
-        if c == l:
+        if c == letter_:
             if i < len(word) - 1:
-                guess_word = guess_word[:i] + l + guess_word[i + 1:]
+                guess_word = guess_word[:i] + letter_ + guess_word[i + 1:]
             else:
-                guess_word = guess_word[:i] + l
+                guess_word = guess_word[:i] + letter_
 
     return guess_word
 
@@ -20,7 +20,9 @@ msg_win = 'You survived!'
 msg_lost = 'You lost!'
 msg_letter_prompt = 'Input a letter: '
 msg_letter_doesnt_appear = "That letter doesn't appear in the word."
-msg_thanks = "Thanks for playing!"
+msg_no_improvements = "No Improvements."
+msg_guessed = "You guessed the word!"
+# msg_thanks = "Thanks for playing!"
 
 attempts = 8
 
@@ -34,17 +36,23 @@ guess_set = set()
 print(title_game, " #", attempts, "attempts\n")
 while attempts > 0:
     if guess_set == answer_set:
+        print(msg_guessed)
+        print(msg_win)
         break
 
     print(guess)
     print(msg_letter_prompt)
     letter = input()
-    attempts -= 1
 
-    if letter not in answer_set:
-        print(msg_letter_doesnt_appear, "  #", attempts)
+    if letter in guess_set:
+        print(msg_no_improvements, "  #", attempts, 'attempts')
+    elif letter not in answer_set:
+        print(msg_letter_doesnt_appear, "  #", attempts, 'attempts')
     else:
         guess_set.add(letter)
         guess = replace_with_letter(answer, guess, letter)
+        continue
 
-print(msg_thanks)
+    attempts -= 1
+else:
+    print(msg_lost)
