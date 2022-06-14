@@ -8,9 +8,10 @@ random.seed()
 
 answers = ['python', 'java', 'swift', 'javascript']
 answer = random.choice(answers)
+hint = answer[:3] + "-" * len(answer[3:])
 
 print('H A N G M A N')
-print('Guess the word: > ')
+print(f'Guess the word {hint}: > ')
 guess = input()
 
 if guess == answer:
