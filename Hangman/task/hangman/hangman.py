@@ -21,7 +21,10 @@ msg_lost = 'You lost!'
 msg_letter_prompt = 'Input a letter: '
 msg_letter_doesnt_appear = "That letter doesn't appear in the word."
 msg_no_improvements = "No Improvements."
-msg_guessed = "You guessed the word!"
+msg_guessed = "You guessed the word"
+msg_single_letter = "Please, input a single letter."
+msg_lowercase_letter = "Please, enter a lowercase letter from the English alphabet."
+msg_already_guessed = "You've already guessed this letter."
 # msg_thanks = "Thanks for playing!"
 
 attempts = 8
@@ -32,17 +35,32 @@ answer_set = set(answer)
 
 guess = "-" * len(answer)
 guess_set = set()
+inputs = set()
 
 print(title_game, " #", attempts, "attempts\n")
 while attempts > 0:
     if guess_set == answer_set:
-        print(msg_guessed)
+        print(f'{msg_guessed} {answer}!')
         print(msg_win)
         break
 
     print(guess)
     print(msg_letter_prompt)
     letter = input()
+
+    if len(letter) != 1:
+        print(msg_single_letter)
+        continue
+
+    if not letter.isalpha() or not letter.islower():
+        print(msg_lowercase_letter)
+        continue
+
+    if letter in inputs:
+        print(msg_already_guessed)
+        continue
+
+    inputs.add(letter)
 
     if letter in guess_set:
         print(msg_no_improvements, "  #", attempts, 'attempts')
